@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/flushthemoney/GoRBAC/internal/utils"
+	"github.com/flushthemoney/GoRBAC/internal/k8s"
 	"github.com/spf13/cobra"
 )
 
@@ -34,7 +34,7 @@ func init() {
 }
 
 func fetchRBAC(kubeconfig string, namespace string) error {
-	clientset, err := utils.NewClient(kubeconfig)
+	clientset, err := k8s.NewClient(kubeconfig)
 	if err != nil {
 		return fmt.Errorf("failed to create Kubernetes client: %w", err)
 	}

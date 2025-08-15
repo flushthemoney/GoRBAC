@@ -1,4 +1,4 @@
-package utils
+package k8s
 
 // Client wraps Kubernetes client for RBAC operations
 import (
