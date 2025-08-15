@@ -6,7 +6,7 @@ import (
 	rbacv1 "k8s.io/api/rbac/v1"
 )
 
-// Metadata holds metadata about the audit.
+// Metadata holds metadata about the fetch.
 type Metadata struct {
 	ClusterName string    `json:"clusterName"`
 	Timestamp   time.Time `json:"timestamp"`
