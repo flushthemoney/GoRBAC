@@ -14,22 +14,20 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ruleKubeconfig string
-var ruleNamespaces string
-var ruleJsonOut bool
-var ruleInputFile string
+// Only declare variables not already declared in fetch.go
+var namespace string
+var inputFile string
 
-// ruleauditCmd represents the ruleaudit command
-
-var ruleauditCmd = &cobra.Command{
+// ruleAuditCmd represents the ruleaudit command
+var ruleAuditCmd = &cobra.Command{
 	Use:   "ruleaudit",
 	Short: "Audit RBAC resources for risky configurations",
 	Long: `Audit RBAC resources for risky configurations using built-in rules.
 You can fetch live from a cluster or audit a previously saved JSON file.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var resources types.RBACResources
-		if ruleInputFile != "" {
-			data, err := os.ReadFile(ruleInputFile)
+		if inputFile != "" {
+			data, err := os.ReadFile(inputFile)
 			if err != nil {
 				log.Fatalf("Failed to read input file: %v", err)
 			}
@@ -37,11 +35,11 @@ You can fetch live from a cluster or audit a previously saved JSON file.`,
 				log.Fatalf("Failed to unmarshal input file: %v", err)
 			}
 		} else {
-			clientset, err := k8s.NewClient(ruleKubeconfig)
+			clientset, err := k8s.NewClient(kubeconfig)
 			if err != nil {
 				log.Fatalf("Failed to create Kubernetes client: %v", err)
 			}
-			rsrcPtr, err := clientset.GetRBACResources(cmd.Context(), ruleNamespaces)
+			rsrcPtr, err := clientset.GetRBACResources(cmd.Context(), namespace)
 			if err != nil {
 				log.Fatalf("Failed to get RBAC resources: %v", err)
 			}
@@ -50,15 +48,15 @@ You can fetch live from a cluster or audit a previously saved JSON file.`,
 				ClusterName: "my-cluster", // Placeholder
 				Timestamp:   time.Now(),
 			}
-			if ruleNamespaces != "" {
-				meta.Namespaces = strings.Split(ruleNamespaces, ",")
+			if namespace != "" {
+				meta.Namespaces = strings.Split(namespace, ",")
 			}
 			resources.Metadata = meta
 		}
 
 		report := audit.AuditRBACResources(resources)
 
-		if ruleJsonOut {
+		if jsonOut {
 			jsonData, err := json.MarshalIndent(report, "", "  ")
 			if err != nil {
 				log.Fatalf("Failed to marshal audit report: %v", err)
@@ -86,9 +84,9 @@ You can fetch live from a cluster or audit a previously saved JSON file.`,
 }
 
 func init() {
-	rootCmd.AddCommand(ruleauditCmd)
-	ruleauditCmd.Flags().StringVar(&ruleKubeconfig, "kubeconfig", "", "Path to the kubeconfig file")
-	ruleauditCmd.Flags().StringVar(&ruleNamespaces, "namespace", "", "Namespaces to audit (comma-separated)")
-	ruleauditCmd.Flags().BoolVar(&ruleJsonOut, "jsonOut", false, "Output audit results to JSON file")
-	ruleauditCmd.Flags().StringVar(&ruleInputFile, "input", "", "Path to a previously saved RBAC resources JSON file to audit")
+	rootCmd.AddCommand(ruleAuditCmd)
+	ruleAuditCmd.Flags().StringVar(&kubeconfig, "kubeconfig", "", "Path to the kubeconfig file")
+	ruleAuditCmd.Flags().StringVar(&namespace, "namespace", "", "Namespaces to audit (comma-separated)")
+	ruleAuditCmd.Flags().BoolVar(&jsonOut, "jsonOut", false, "Output audit results to JSON file")
+	ruleAuditCmd.Flags().StringVar(&inputFile, "input", "", "Path to a previously saved RBAC resources JSON file to audit")
 }

@@ -21,9 +21,9 @@ var jsonOut bool
 // fetchCmd represents the fetch command
 var fetchCmd = &cobra.Command{
 	Use:   "fetch",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command.`, 
+	Short: "Fetch RBAC resources from a Kubernetes cluster.",
+	Long: `Fetches Roles, ClusterRoles, RoleBindings, and ClusterRoleBindings from a Kubernetes cluster.
+You can save the results to a JSON file for further analysis.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := fetchRBAC(kubeconfig, namespaces, jsonOut)
 		if err != nil {

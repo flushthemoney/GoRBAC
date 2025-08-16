@@ -1,6 +1,5 @@
 /*
 Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -11,14 +10,18 @@ import (
 )
 
 // rootCmd represents the base command when called without any subcommands
+// save them to a JSON file for further analysis.`,
 var rootCmd = &cobra.Command{
 	Use:   "gorbac",
-	Short: "GoRBAC is a CLI tool for auditing Kubernetes RBAC resources.",
+	Short: "GoRBAC: Audit and analyze Kubernetes RBAC resources.",
 	Long: `GoRBAC is a CLI tool designed to help you audit and analyze
-Kubernetes RBAC (Role-Based Access Control) resources. 
+Kubernetes RBAC (Role-Based Access Control) resources.
 
-You can use GoRBAC to fetch RBAC resources from a cluster and 
-save them to a JSON file for further analysis.`,
+Features:
+- Fetch RBAC resources from a cluster and save them to a JSON file.
+- Audit RBAC resources for risky configurations using built-in rules.
+
+See the documentation for details on each command.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
@@ -43,5 +46,3 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 }
-
-

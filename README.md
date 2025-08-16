@@ -5,10 +5,12 @@ GoRBAC is a CLI tool for auditing Kubernetes RBAC resources.
 ## About
 
 GoRBAC is a CLI tool designed to help you audit and analyze
-Kubernetes RBAC (Role-Based Access Control) resources. 
+Kubernetes RBAC (Role-Based Access Control) resources.
 
-You can currently use GoRBAC to fetch RBAC resources from a cluster and 
-save them to a JSON file for further analysis.
+You can use GoRBAC to:
+
+- Fetch RBAC resources from a cluster and save them to a JSON file for further analysis.
+- Audit RBAC resources for risky configurations using built-in rules (see `ruleaudit` command).
 
 ## Getting Started
 
@@ -35,40 +37,14 @@ save them to a JSON file for further analysis.
 
 ### Fetch RBAC Resources
 
-The `fetch` command fetches Roles, ClusterRoles, RoleBindings, and ClusterRoleBindings from a Kubernetes cluster.
+The `fetch` command retrieves Roles, ClusterRoles, RoleBindings, and ClusterRoleBindings from a Kubernetes cluster and can save them to a JSON file for further analysis.
 
-```sh
-gorbac fetch [flags]
-```
+See [docs/fetch.md](docs/fetch.md) for full usage, flags, and examples.
 
-**Flags:**
+---
 
-*   `--kubeconfig`: Path to the kubeconfig file (optional).
-*   `--namespace`: Comma-separated list of namespaces to audit (optional).
-*   `--jsonOut`: Output the RBAC resources to a JSON file.
+### Audit RBAC Resources for Risky Configurations
 
-**Examples:**
+The `ruleaudit` command audits RBAC resources for risky configurations using built-in rules. You can audit live from a cluster or from a previously saved JSON file.
 
-*   Fetch all RBAC resources from the cluster and output to a JSON file:
-
-    ```sh
-    ./gorbac fetch --jsonOut
-    ```
-
-*   Fetch RBAC resources from a specific namespace:
-
-    ```sh
-    ./gorbac fetch --namespace=my-namespace --jsonOut
-    ```
-
-*   Fetch RBAC resources from multiple namespaces:
-
-    ```sh
-    ./gorbac fetch --namespace=my-namespace,another-namespace --jsonOut
-    ```
-
-*   Use a specific kubeconfig file:
-
-    ```sh
-    ./gorbac fetch --kubeconfig=/path/to/kubeconfig --jsonOut
-    ```
+See [docs/ruleaudit.md](docs/ruleaudit.md) for full usage, flags, and examples.
