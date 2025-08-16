@@ -20,6 +20,12 @@ You can use GoRBAC to:
 
 ### Installation
 
+## Install via Go
+
+```sh
+go install github.com/flushthemoney/GoRBAC@latest
+```
+
 1. Clone the repository:
    ```sh
    git clone https://github.com/flushthemoney/GoRBAC.git

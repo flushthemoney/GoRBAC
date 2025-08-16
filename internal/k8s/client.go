@@ -57,17 +57,16 @@ func NewClient(kubeconfig string) (*Client, error) {
 	}, nil
 }
 
+// GetRBACResources fetches RBAC resources. If namespace is empty, fetches Roles and RoleBindings from all namespaces.
 func (c *Client) GetRBACResources(ctx context.Context, namespace string) (*types.RBACResources, error) {
 	resources := &types.RBACResources{}
 
 	// Get Roles
-	if namespace != "" {
-		roles, err := c.getRoles(ctx, namespace)
-		if err != nil {
-			return nil, fmt.Errorf("failed to get roles: %w", err)
-		}
-		resources.Roles = roles
+	roles, err := c.getRoles(ctx, namespace)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get roles: %w", err)
 	}
+	resources.Roles = roles
 
 	// Get ClusterRoles
 	clusterRoles, err := c.getClusterRoles(ctx)
@@ -77,13 +76,11 @@ func (c *Client) GetRBACResources(ctx context.Context, namespace string) (*types
 	resources.ClusterRoles = clusterRoles
 
 	// Get RoleBindings
-	if namespace != "" {
-		roleBindings, err := c.getRoleBindings(ctx, namespace)
-		if err != nil {
-			return nil, fmt.Errorf("failed to get role bindings: %w", err)
-		}
-		resources.RoleBindings = roleBindings
+	roleBindings, err := c.getRoleBindings(ctx, namespace)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get role bindings: %w", err)
 	}
+	resources.RoleBindings = roleBindings
 
 	// Get ClusterRoleBindings (always cluster-scoped)
 	clusterRoleBindings, err := c.getClusterRoleBindings(ctx)
@@ -93,10 +90,9 @@ func (c *Client) GetRBACResources(ctx context.Context, namespace string) (*types
 	resources.ClusterRoleBindings = clusterRoleBindings
 
 	return resources, nil
-
 }
 
-// getRoles retrieves roles from the cluster
+// getRoles retrieves roles from the cluster. If namespace is empty, fetches from all namespaces.
 func (c *Client) getRoles(ctx context.Context, namespace string) ([]rbacv1.Role, error) {
 	if namespace != "" {
 		roles, err := c.clientset.RbacV1().Roles(namespace).List(ctx, metav1.ListOptions{})
@@ -106,19 +102,24 @@ func (c *Client) getRoles(ctx context.Context, namespace string) ([]rbacv1.Role,
 		return roles.Items, nil
 	}
 
-	return []rbacv1.Role{}, nil
+	// Fetch from all namespaces
+	rolesList, err := c.clientset.RbacV1().Roles("").List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, err
+	}
+	return rolesList.Items, nil
 }
 
 // getClusterRoles retrieves cluster roles from the cluster
 func (c *Client) getClusterRoles(ctx context.Context) ([]rbacv1.ClusterRole, error) {
-	clusterRoles, err := c.clientset.RbacV1().ClusterRoles().List(ctx, metav1.ListOptions{})
+	clusterRolesList, err := c.clientset.RbacV1().ClusterRoles().List(ctx, metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}
-	return clusterRoles.Items, nil
+	return clusterRolesList.Items, nil
 }
 
-// getRoleBindings retrieves role bindings from the cluster
+// getRoleBindings retrieves role bindings from the cluster. If namespace is empty, fetches from all namespaces.
 func (c *Client) getRoleBindings(ctx context.Context, namespace string) ([]rbacv1.RoleBinding, error) {
 	if namespace != "" {
 		roleBindings, err := c.clientset.RbacV1().RoleBindings(namespace).List(ctx, metav1.ListOptions{})
@@ -128,7 +129,12 @@ func (c *Client) getRoleBindings(ctx context.Context, namespace string) ([]rbacv
 		return roleBindings.Items, nil
 	}
 
-	return []rbacv1.RoleBinding{}, nil
+	// Fetch from all namespaces
+	roleBindingsList, err := c.clientset.RbacV1().RoleBindings("").List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, err
+	}
+	return roleBindingsList.Items, nil
 }
 
 // getClusterRoleBindings retrieves cluster role bindings from the cluster
