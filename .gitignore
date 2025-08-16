@@ -33,3 +33,4 @@ go.work.sum
 
 # Custom exclusions
 rbac_resources.json
+rbac_audit_report.json
