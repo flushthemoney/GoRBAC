@@ -1,16 +1,14 @@
 # GoRBAC
 
-GoRBAC is a CLI tool for auditing Kubernetes RBAC resources.
+GoRBAC is a powerful CLI tool for auditing and analyzing Kubernetes RBAC (Role-Based Access Control) resources. It helps cluster administrators and security teams identify risky RBAC configurations, visualize permissions, and ensure best practices are followed.
 
-## About
+## Features
 
-GoRBAC is a CLI tool designed to help you audit and analyze
-Kubernetes RBAC (Role-Based Access Control) resources.
+- **Fetch RBAC resources**: Retrieve Roles, ClusterRoles, RoleBindings, and ClusterRoleBindings from a Kubernetes cluster and save them to a JSON file for offline analysis.
+- **Audit for risky configurations**: Analyze RBAC resources using built-in rules to detect overly permissive or dangerous settings.
+- **Flexible input**: Audit live from a cluster or from previously saved JSON files.
 
-You can use GoRBAC to:
-
-- Fetch RBAC resources from a cluster and save them to a JSON file for further analysis.
-- Audit RBAC resources for risky configurations using built-in rules (see `ruleaudit` command).
+Comprehensive documentation for each command, including usage, flags, and examples, is available in the [docs/](docs/) directory.
 
 ## Getting Started
 
@@ -20,11 +18,17 @@ You can use GoRBAC to:
 
 ### Installation
 
-## Install via Go
+#### Option 1: Install via Go
+
+You can install GoRBAC directly using Go (requires Go 1.16+):
 
 ```sh
 go install github.com/flushthemoney/GoRBAC@latest
 ```
+
+This will place the `gorbac` binary in your `$GOPATH/bin` or `$GOBIN` directory.
+
+#### Option 2: Build from Source
 
 1. Clone the repository:
    ```sh
@@ -41,16 +45,9 @@ go install github.com/flushthemoney/GoRBAC@latest
 
 ## Usage
 
-### Fetch RBAC Resources
+## Commands Overview
 
-The `fetch` command retrieves Roles, ClusterRoles, RoleBindings, and ClusterRoleBindings from a Kubernetes cluster and can save them to a JSON file for further analysis.
+- **Fetch RBAC Resources**: Use the `fetch` command to collect RBAC resources from your cluster. See [docs/fetch.md](docs/fetch.md) for details.
+- **Audit RBAC Resources**: Use the `ruleaudit` command to analyze RBAC resources for risky configurations. See [docs/ruleaudit.md](docs/ruleaudit.md) for details.
 
-See [docs/fetch.md](docs/fetch.md) for full usage, flags, and examples.
-
----
-
-### Audit RBAC Resources for Risky Configurations
-
-The `ruleaudit` command audits RBAC resources for risky configurations using built-in rules. You can audit live from a cluster or from a previously saved JSON file.
-
-See [docs/ruleaudit.md](docs/ruleaudit.md) for full usage, flags, and examples.
+For more information on all commands and advanced usage, refer to the [docs/](docs/) directory.
