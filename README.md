@@ -4,6 +4,8 @@ GoRBAC is a powerful CLI tool for auditing and analyzing Kubernetes RBAC (Role-B
 
 It is also intended to be used by people trying to learn more about RBAC rules on K8s
 
+![Demo](./docs/demo2.gif)
+
 ## Features
 
 - **Fetch RBAC resources**: Retrieve Roles, ClusterRoles, RoleBindings, and ClusterRoleBindings from a Kubernetes cluster and save them to a JSON file for offline analysis.
