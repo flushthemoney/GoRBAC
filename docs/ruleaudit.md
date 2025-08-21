@@ -14,7 +14,7 @@ gorbac ruleaudit [flags]
 
 - `--kubeconfig`: Path to the kubeconfig file (optional).
 - `--namespace`: Comma-separated list of namespaces to audit (optional).
-- `--jsonOut`: Output the audit report to a JSON file (optional).
+- `--json-out`: Output the audit report to a JSON file (optional).
 - `--input`: Path to a previously saved RBAC resources JSON file to audit (optional).
 - `--include-system`: Include system components in audit results (may produce many findings, disabled by default).
 
@@ -29,7 +29,7 @@ gorbac ruleaudit [flags]
 - Audit live cluster RBAC resources and output to JSON:
 
   ```sh
-  ./gorbac ruleaudit --jsonOut
+  ./gorbac ruleaudit --json-out
   ```
 
 - Audit RBAC resources from a specific namespace:
@@ -136,7 +136,7 @@ If issues are found:
 
 ### JSON Output
 
-When using `--jsonOut`, the audit report is saved to `rbac_audit_report.json` with comprehensive metadata:
+When using `--json-out`, the audit report is saved to `rbac_audit_report.json` with comprehensive metadata:
 
 ```json
 {

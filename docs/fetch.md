@@ -12,39 +12,39 @@ gorbac fetch [flags]
 
 - `--kubeconfig`: Path to the kubeconfig file (optional).
 - `--namespace`: Comma-separated list of namespaces to fetch (optional).
-- `--jsonOut`: Output the RBAC resources to a JSON file.
+- `--json-out`: Output the RBAC resources to a JSON file.
 
 **Examples:**
 
 - Fetch all RBAC resources from the cluster and output to JSON:
 
   ```sh
-  ./gorbac fetch --jsonOut
+  ./gorbac fetch --json-out
   ```
 
 - Fetch RBAC resources from a specific namespace:
 
   ```sh
-  ./gorbac fetch --namespace=my-namespace --jsonOut
+  ./gorbac fetch --namespace=my-namespace --json-out
   ```
 
 - Fetch RBAC resources from multiple namespaces:
 
   ```sh
-  ./gorbac fetch --namespace=my-namespace,another-namespace --jsonOut
+  ./gorbac fetch --namespace=my-namespace,another-namespace --json-out
   ```
 
 - Use a specific kubeconfig file:
 
   ```sh
-  ./gorbac fetch --kubeconfig=/path/to/kubeconfig --jsonOut
+  ./gorbac fetch --kubeconfig=/path/to/kubeconfig --json-out
   ```
 
 ## How It Works
 
 - Connects to the Kubernetes cluster using the provided kubeconfig (or default if not specified).
 - Fetches RBAC resources from the specified namespaces (or all if not specified).
-- If `--jsonOut` is set, the resources are saved to `rbac_resources.json`.
+- If `--json-out` is set, the resources are saved to `rbac_resources.json`.
 - Otherwise, resources are not saved to disk.
 
 ## Output

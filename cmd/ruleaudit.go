@@ -79,7 +79,7 @@ func init() {
 	rootCmd.AddCommand(ruleAuditCmd)
 	ruleAuditCmd.Flags().StringVar(&kubeconfig, "kubeconfig", "", "Path to the kubeconfig file")
 	ruleAuditCmd.Flags().StringVar(&namespace, "namespace", "", "Namespaces to audit (comma-separated)")
-	ruleAuditCmd.Flags().BoolVar(&jsonOut, "jsonOut", false, "Output audit results to JSON file")
+	ruleAuditCmd.Flags().BoolVar(&jsonOut, "json-out", false, "Output audit results to JSON file")
 	ruleAuditCmd.Flags().StringVar(&inputFile, "input", "", "Path to a previously saved RBAC resources JSON file to audit")
 	ruleAuditCmd.Flags().BoolVar(&includeSystem, "include-system", false, "Include system components in audit results (may produce many findings)")
 }

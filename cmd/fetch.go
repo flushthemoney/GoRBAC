@@ -36,7 +36,7 @@ func init() {
 	rootCmd.AddCommand(fetchCmd)
 	fetchCmd.Flags().StringVar(&kubeconfig, "kubeconfig", "", "Path to the kubeconfig file")
 	fetchCmd.Flags().StringVar(&namespaces, "namespace", "", "Namespaces to audit")
-	fetchCmd.Flags().BoolVar(&jsonOut, "jsonOut", false, "Check to save RBAC details to JSON")
+	fetchCmd.Flags().BoolVar(&jsonOut, "json-out", false, "Check to save RBAC details to JSON")
 }
 
 func fetchRBAC(kubeconfig string, namespace string, jsonOut bool) error {
