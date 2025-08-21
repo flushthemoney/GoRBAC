@@ -2,6 +2,7 @@ package audit
 
 import (
 	"sort"
+	"strings"
 
 	"github.com/flushthemoney/GoRBAC/internal/types"
 	v1 "k8s.io/api/rbac/v1"
@@ -26,14 +27,47 @@ type AuditResult struct {
 type AuditReport struct {
 	Metadata types.Metadata `json:"metadata"`
 	Findings []AuditResult  `json:"findings"`
+	Summary  AuditSummary   `json:"summary"`
+}
+
+type AuditSummary struct {
+	TotalClusterRoles        int `json:"totalClusterRoles"`
+	TotalRoles               int `json:"totalRoles"`
+	TotalClusterRoleBindings int `json:"totalClusterRoleBindings"`
+	TotalRoleBindings        int `json:"totalRoleBindings"`
+	TotalFindings            int `json:"totalFindings"`
+	HighRiskFindings         int `json:"highRiskFindings"`
+	MediumRiskFindings       int `json:"mediumRiskFindings"`
+	LowRiskFindings          int `json:"lowRiskFindings"`
+	SystemResourcesSkipped   int `json:"systemResourcesSkipped"`
+}
+
+type AuditOptions struct {
+	IncludeSystemComponents bool
 }
 
 // AuditRBACResources audits the RBAC resources for risky configurations
 func AuditRBACResources(resources types.RBACResources) AuditReport {
+	return AuditRBACResourcesWithOptions(resources, AuditOptions{})
+}
+
+// AuditRBACResourcesWithOptions audits the RBAC resources with custom options
+func AuditRBACResourcesWithOptions(resources types.RBACResources, options AuditOptions) AuditReport {
 	findings := []AuditResult{}
+	summary := AuditSummary{
+		TotalClusterRoles:        len(resources.ClusterRoles),
+		TotalRoles:               len(resources.Roles),
+		TotalClusterRoleBindings: len(resources.ClusterRoleBindings),
+		TotalRoleBindings:        len(resources.RoleBindings),
+	}
 
 	// Check ClusterRoles for risky rules
 	for _, cr := range resources.ClusterRoles {
+		if !options.IncludeSystemComponents && isSystemResource(cr.Name) {
+			summary.SystemResourcesSkipped++
+			continue
+		}
+
 		for _, rule := range cr.Rules {
 			if isRuleRisky(rule) {
 				findings = append(findings, AuditResult{
@@ -66,6 +100,11 @@ func AuditRBACResources(resources types.RBACResources) AuditReport {
 
 	// Check Roles for risky rules
 	for _, r := range resources.Roles {
+		if !options.IncludeSystemComponents && (isSystemResource(r.Name) || isSystemNamespace(r.Namespace)) {
+			summary.SystemResourcesSkipped++
+			continue
+		}
+
 		for _, rule := range r.Rules {
 			if isRuleRisky(rule) {
 				findings = append(findings, AuditResult{
@@ -99,25 +138,41 @@ func AuditRBACResources(resources types.RBACResources) AuditReport {
 		}
 	}
 
-	// Check for medium/low risk verbs in ClusterRoleBindings and RoleBindings (e.g., impersonate, escalate, bind)
-	// (ClusterRoleBindings and RoleBindings themselves are high risk if bound to system groups, already checked above)
-
-	// Check ClusterRoleBindings for binding to system:serviceaccounts or system:unauthenticated
+	// Check ClusterRoleBindings for dangerous bindings
 	for _, crb := range resources.ClusterRoleBindings {
+		if !options.IncludeSystemComponents && (isSystemResource(crb.Name) || isLegitimateSystemBinding(crb.Name)) {
+			summary.SystemResourcesSkipped++
+			continue
+		}
+
 		for _, s := range crb.Subjects {
-			if s.Kind == "Group" && (s.Name == "system:unauthenticated" || s.Name == "system:serviceaccounts") {
+			if s.Kind == "Group" && (s.Name == "system:unauthenticated") {
 				findings = append(findings, AuditResult{
 					ResourceKind: "ClusterRoleBinding",
 					ResourceName: crb.Name,
 					Risk:         RiskHigh,
-					Reason:       "ClusterRoleBinding grants cluster-wide access to all service accounts or unauthenticated users.",
+					Reason:       "ClusterRoleBinding grants cluster-wide access to unauthenticated users.",
+				})
+			}
+			// Only flag service account bindings if they're not legitimate system ones
+			if s.Kind == "Group" && s.Name == "system:serviceaccounts" && !isLegitimateServiceAccountBinding(crb.Name) {
+				findings = append(findings, AuditResult{
+					ResourceKind: "ClusterRoleBinding",
+					ResourceName: crb.Name,
+					Risk:         RiskHigh,
+					Reason:       "ClusterRoleBinding grants cluster-wide access to all service accounts.",
 				})
 			}
 		}
 	}
 
-	// Check RoleBindings for binding to system:unauthenticated
+	// Check RoleBindings for dangerous bindings
 	for _, rb := range resources.RoleBindings {
+		if !options.IncludeSystemComponents && (isSystemResource(rb.Name) || isSystemNamespace(rb.Namespace)) {
+			summary.SystemResourcesSkipped++
+			continue
+		}
+
 		for _, s := range rb.Subjects {
 			if s.Kind == "Group" && s.Name == "system:unauthenticated" {
 				findings = append(findings, AuditResult{
@@ -131,11 +186,25 @@ func AuditRBACResources(resources types.RBACResources) AuditReport {
 		}
 	}
 
+	// Calculate summary statistics
+	summary.TotalFindings = len(findings)
+	for _, finding := range findings {
+		switch finding.Risk {
+		case RiskHigh:
+			summary.HighRiskFindings++
+		case RiskMedium:
+			summary.MediumRiskFindings++
+		case RiskLow:
+			summary.LowRiskFindings++
+		}
+	}
+
 	// Sort findings by risk: High > Medium > Low
 	sortFindingsByRisk(findings)
 	return AuditReport{
 		Metadata: resources.Metadata,
 		Findings: findings,
+		Summary:  summary,
 	}
 }
 
@@ -318,4 +387,75 @@ func lowRiskReason(rule v1.PolicyRule) string {
 		}
 	}
 	return "Rule is considered low risk."
+}
+
+// isSystemResource checks if a resource name indicates it's a system component
+func isSystemResource(name string) bool {
+	systemPrefixes := []string{
+		"system:",
+		"cluster-admin",
+		"admin",
+		"edit",
+		"view",
+		"kubeadm:",
+	}
+
+	for _, prefix := range systemPrefixes {
+		if strings.HasPrefix(name, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
+// isSystemNamespace checks if a namespace is a system namespace
+func isSystemNamespace(namespace string) bool {
+	systemNamespaces := []string{
+		"kube-system",
+		"kube-public",
+		"kube-node-lease",
+		"default", // Often contains system components
+	}
+
+	for _, ns := range systemNamespaces {
+		if namespace == ns {
+			return true
+		}
+	}
+	return false
+}
+
+// isLegitimateSystemBinding checks if a ClusterRoleBinding is a known legitimate system binding
+func isLegitimateSystemBinding(name string) bool {
+	legitimateBindings := []string{
+		"system:public-info-viewer",
+		"system:service-account-issuer-discovery",
+		"system:discovery",
+		"system:basic-user",
+		"cluster-admin",
+	}
+
+	for _, binding := range legitimateBindings {
+		if name == binding {
+			return true
+		}
+	}
+	return false
+}
+
+// isLegitimateServiceAccountBinding checks if a service account binding is legitimate
+func isLegitimateServiceAccountBinding(name string) bool {
+	// These are bindings that legitimately grant access to all service accounts
+	legitimateServiceAccountBindings := []string{
+		"system:public-info-viewer",
+		"system:service-account-issuer-discovery",
+		"system:discovery",
+	}
+
+	for _, binding := range legitimateServiceAccountBindings {
+		if name == binding {
+			return true
+		}
+	}
+	return false
 }
