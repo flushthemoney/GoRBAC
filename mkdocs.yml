@@ -1,0 +1,57 @@
+site_name: RBACLens
+site_url: https://mydomain.org/mysite
+repo_url: https://github.com/flushthemoney/RBACLens
+repo_name: flushthemoney/RBACLens
+
+theme:
+  name: material
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - content.tabs.link
+    - content.code.copy
+    - navigation.footer
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/flushthemoney/RBACLens
+      name: GitHub Repository
+    - icon: fontawesome/brands/golang
+      link: https://pkg.go.dev/github.com/flushthemoney/RBACLens
+      name: Go Package Documentation
+
+copyright: |
+  Copyright &copy; 2025 flushthemoney. Licensed under the MIT License.

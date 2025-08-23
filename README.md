@@ -28,14 +28,21 @@ Pre-built binaries for Linux, macOS, and Windows are available on the [GitHub Re
 
 1. Go to the [releases page](https://github.com/flushthemoney/RBACLens/releases).
 2. Download the appropriate binary for your OS and architecture.
-3. Unpack the archive (if needed) and move the binary to a directory in your `PATH` (e.g., `/usr/local/bin` or `$HOME/.local/bin`).
-4. (Optional) Rename the binary to `rbaclens` for convenience.
+3. Move the binary to a directory in your `PATH` (e.g., `~/bin`, `~/.local/bin`, or `/usr/local/bin`).
+4. (Optional) Rename the binary to `rbaclens` for convenience. This makes it easier to run the tool from the terminal.
 
-Example:
+**Linux:**
 
 ```sh
 mv RBACLens-linux-amd64 ~/bin/rbaclens
 chmod +x ~/bin/rbaclens
+```
+
+**macOS:**
+
+```sh
+mv RBACLens-darwin-amd64 /usr/local/bin/rbaclens
+chmod +x /usr/local/bin/rbaclens
 ```
 
 #### Option 2: Install via Go
@@ -48,11 +55,9 @@ go install github.com/flushthemoney/RBACLens@latest
 
 This will place the binary (named `RBACLens` by default) in your `$GOPATH/bin`, `$GOBIN`, or `$HOME/go/bin` directory.
 
-**Note:**
+**Add Go bin directory to your PATH:**
 
-To run `rbaclens` from anywhere, ensure that your Go bin directory is in your `PATH`.
-
-- For most shells (bash, zsh):
+- **Bash / Zsh:**
 
   ```sh
   export PATH="$PATH:$HOME/go/bin"
@@ -60,12 +65,14 @@ To run `rbaclens` from anywhere, ensure that your Go bin directory is in your `P
 
   Add the above line to your `~/.bashrc` or `~/.zshrc`.
 
-- For fish shell:
+- **Fish shell:**
   ```fish
   set -U fish_user_paths $fish_user_paths $HOME/go/bin
   ```
 
-If the binary is named `RBACLens`, you may want to symlink it for convenience:
+**Symlink for Convenience:**
+
+If the binary is named `RBACLens`, you may want to symlink it to `rbaclens`:
 
 ```sh
 ln -sf "$HOME/go/bin/RBACLens" "$HOME/go/bin/rbaclens"
