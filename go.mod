@@ -1,4 +1,4 @@
-module github.com/flushthemoney/GoRBAC
+module github.com/flushthemoney/RBACLens
 
 go 1.24.5
 

@@ -4,7 +4,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/flushthemoney/GoRBAC/internal/types"
+	"github.com/flushthemoney/RBACLens/internal/types"
 	v1 "k8s.io/api/rbac/v1"
 )
 

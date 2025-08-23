@@ -5,7 +5,7 @@ The `fetch` command retrieves Kubernetes RBAC resources for analysis or auditing
 ## Usage
 
 ```sh
-gorbac fetch [flags]
+rbaclens fetch [flags]
 ```
 
 **Flags:**
@@ -19,25 +19,25 @@ gorbac fetch [flags]
 - Fetch all RBAC resources from the cluster and output to JSON:
 
   ```sh
-  ./gorbac fetch --json-out
+  ./rbaclens fetch --json-out
   ```
 
 - Fetch RBAC resources from a specific namespace:
 
   ```sh
-  ./gorbac fetch --namespace=my-namespace --json-out
+  ./rbaclens fetch --namespace=my-namespace --json-out
   ```
 
 - Fetch RBAC resources from multiple namespaces:
 
   ```sh
-  ./gorbac fetch --namespace=my-namespace,another-namespace --json-out
+  ./rbaclens fetch --namespace=my-namespace,another-namespace --json-out
   ```
 
 - Use a specific kubeconfig file:
 
   ```sh
-  ./gorbac fetch --kubeconfig=/path/to/kubeconfig --json-out
+  ./rbaclens fetch --kubeconfig=/path/to/kubeconfig --json-out
   ```
 
 ## How It Works

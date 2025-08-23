@@ -7,7 +7,7 @@ This is designed to focus on **actual security issues** by filtering out legitim
 ## Usage
 
 ```sh
-gorbac ruleaudit [flags]
+rbaclens ruleaudit [flags]
 ```
 
 **Flags:**
@@ -23,31 +23,31 @@ gorbac ruleaudit [flags]
 - Audit live cluster RBAC resources with clean output:
 
   ```sh
-  ./gorbac ruleaudit
+  ./rbaclens ruleaudit
   ```
 
 - Audit live cluster RBAC resources and output to JSON:
 
   ```sh
-  ./gorbac ruleaudit --json-out
+  ./rbaclens ruleaudit --json-out
   ```
 
 - Audit RBAC resources from a specific namespace:
 
   ```sh
-  ./gorbac ruleaudit --namespace=my-namespace
+  ./rbaclens ruleaudit --namespace=my-namespace
   ```
 
 - Audit from a previously saved RBAC resources file:
 
   ```sh
-  ./gorbac ruleaudit --input=rbac_resources.json
+  ./rbaclens ruleaudit --input=rbac_resources.json
   ```
 
 - Include system components in the audit (comprehensive scan):
 
   ```sh
-  ./gorbac ruleaudit --include-system
+  ./rbaclens ruleaudit --include-system
   ```
 
 ## Smart Filtering

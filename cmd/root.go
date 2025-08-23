@@ -12,9 +12,9 @@ import (
 // rootCmd represents the base command when called without any subcommands
 // save them to a JSON file for further analysis.`,
 var rootCmd = &cobra.Command{
-	Use:   "gorbac",
-	Short: "GoRBAC: Audit and analyze Kubernetes RBAC resources.",
-	Long: `GoRBAC is a CLI tool designed to help you audit and analyze
+	Use:   "rbaclens",
+	Short: "RBACLens: Audit and analyze Kubernetes RBAC resources.",
+	Long: `RBACLens is a CLI tool designed to help you audit and analyze
 Kubernetes RBAC (Role-Based Access Control) resources.
 
 Features:
@@ -41,7 +41,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.gorbac.yaml)")
+	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.rbaclens.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/flushthemoney/GoRBAC/internal/k8s"
-	"github.com/flushthemoney/GoRBAC/internal/types"
+	"github.com/flushthemoney/RBACLens/internal/k8s"
+	"github.com/flushthemoney/RBACLens/internal/types"
 	"github.com/spf13/cobra"
 )
 

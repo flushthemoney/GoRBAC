@@ -1,6 +1,6 @@
-# GoRBAC
+# RBACLens
 
-GoRBAC is a powerful CLI tool for auditing and analyzing Kubernetes RBAC (Role-Based Access Control) resources. It helps cluster administrators and security teams identify risky RBAC configurations, visualize permissions, and ensure best practices are followed.
+RBACLens is a powerful CLI tool for auditing and analyzing Kubernetes RBAC (Role-Based Access Control) resources. It helps cluster administrators and security teams identify risky RBAC configurations, visualize permissions, and ensure best practices are followed.
 
 It is also intended to be used by people trying to learn more about RBAC rules on K8s
 
@@ -24,33 +24,33 @@ Comprehensive documentation for each command, including usage, flags, and exampl
 
 #### Option 1: Download Pre-built Binary (Recommended)
 
-Pre-built binaries for Linux, macOS, and Windows are available on the [GitHub Releases page](https://github.com/flushthemoney/GoRBAC/releases).
+Pre-built binaries for Linux, macOS, and Windows are available on the [GitHub Releases page](https://github.com/flushthemoney/RBACLens/releases).
 
-1. Go to the [releases page](https://github.com/flushthemoney/GoRBAC/releases).
+1. Go to the [releases page](https://github.com/flushthemoney/RBACLens/releases).
 2. Download the appropriate binary for your OS and architecture.
 3. Unpack the archive (if needed) and move the binary to a directory in your `PATH` (e.g., `/usr/local/bin` or `$HOME/.local/bin`).
-4. (Optional) Rename the binary to `gorbac` for convenience.
+4. (Optional) Rename the binary to `rbaclens` for convenience.
 
 Example:
 
 ```sh
-mv GoRBAC-linux-amd64 ~/bin/gorbac
-chmod +x ~/bin/gorbac
+mv RBACLens-linux-amd64 ~/bin/rbaclens
+chmod +x ~/bin/rbaclens
 ```
 
 #### Option 2: Install via Go
 
-You can install GoRBAC directly using Go (requires Go 1.16+):
+You can install RBACLens directly using Go (requires Go 1.16+):
 
 ```sh
-go install github.com/flushthemoney/GoRBAC@latest
+go install github.com/flushthemoney/RBACLens@latest
 ```
 
-This will place the binary (named `GoRBAC` by default) in your `$GOPATH/bin`, `$GOBIN`, or `$HOME/go/bin` directory.
+This will place the binary (named `RBACLens` by default) in your `$GOPATH/bin`, `$GOBIN`, or `$HOME/go/bin` directory.
 
 **Note:**
 
-To run `gorbac` from anywhere, ensure that your Go bin directory is in your `PATH`.
+To run `rbaclens` from anywhere, ensure that your Go bin directory is in your `PATH`.
 
 - For most shells (bash, zsh):
 
@@ -65,27 +65,27 @@ To run `gorbac` from anywhere, ensure that your Go bin directory is in your `PAT
   set -U fish_user_paths $fish_user_paths $HOME/go/bin
   ```
 
-If the binary is named `GoRBAC`, you may want to symlink it for convenience:
+If the binary is named `RBACLens`, you may want to symlink it for convenience:
 
 ```sh
-ln -sf "$HOME/go/bin/GoRBAC" "$HOME/go/bin/gorbac"
+ln -sf "$HOME/go/bin/RBACLens" "$HOME/go/bin/rbaclens"
 ```
 
-After this, you can use the `gorbac` command as described below.
+After this, you can use the `rbaclens` command as described below.
 
-#### Option 2: Build from Source
+#### Option 3: Build from Source
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/flushthemoney/GoRBAC.git
+   git clone https://github.com/flushthemoney/RBACLens.git
    ```
 2. Navigate to the project directory:
    ```sh
-   cd GoRBAC
+   cd RBACLens
    ```
 3. Build the binary:
    ```sh
-   go build -o gorbac main.go
+   go build -o rbaclens main.go
    ```
 
 ## Usage

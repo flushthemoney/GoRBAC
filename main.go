@@ -1,10 +1,9 @@
 /*
 Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
 */
 package main
 
-import "github.com/flushthemoney/GoRBAC/cmd"
+import "github.com/flushthemoney/RBACLens/cmd"
 
 func main() {
 	cmd.Execute()
