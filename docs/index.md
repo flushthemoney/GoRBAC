@@ -9,7 +9,7 @@
 RBACLens is a powerful CLI tool for auditing and analyzing Kubernetes RBAC (Role-Based Access Control) resources. It helps cluster administrators and security teams identify risky RBAC configurations, visualize permissions, and ensure best practices are followed.
 
 !!! note
-RBACLens is also great for anyone learning about Kubernetes RBAC rules!
+    RBACLens is also great for anyone learning about Kubernetes RBAC rules!
 
 ## :rocket: Features
 
@@ -114,4 +114,4 @@ For advanced usage and all options, see the [project README](https://github.com/
 ---
 
 !!! info
-You can contribute or report issues on [GitHub](https://github.com/flushthemoney/RBACLens)
+    You can contribute or report issues on [GitHub](https://github.com/flushthemoney/RBACLens)

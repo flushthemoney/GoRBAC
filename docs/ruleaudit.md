@@ -1,7 +1,7 @@
 # :shield: Rule Audit Command
 
 !!! info
-The `ruleaudit` command audits Kubernetes RBAC resources for risky configurations using built-in rules. You can audit resources live from a cluster or from a previously saved JSON file.
+    The `ruleaudit` command audits Kubernetes RBAC resources for risky configurations using built-in rules. You can audit resources live from a cluster or from a previously saved JSON file.
 
 This tool is designed to focus on **actual security issues** by filtering out legitimate system components, making the results actually meaningful.
 
@@ -181,7 +181,7 @@ When using `--json-out`, the audit report is saved to `rbac_audit_report.json` w
 ---
 
 !!! note
-See the main [README](https://github.com/flushthemoney/RBACLens#readme) for more details on installation and usage.
+    See the main [README](https://github.com/flushthemoney/RBACLens#readme) for more details on installation and usage.
 
 ---
 
@@ -262,4 +262,4 @@ When using <code>--json-out</code>, the audit report is saved to <code>rbac_audi
 ---
 
 !!! note
-See the main [README](https://github.com/flushthemoney/RBACLens#readme) for more details on installation and usage.
+    See the main [README](https://github.com/flushthemoney/RBACLens#readme) for more details on installation and usage.

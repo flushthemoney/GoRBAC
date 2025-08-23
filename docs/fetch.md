@@ -1,7 +1,7 @@
 # :inbox_tray: Fetch Command
 
 !!! info
-The `fetch` command retrieves Kubernetes RBAC resources for analysis or auditing. You can fetch resources live from a cluster and optionally save them to a JSON file for offline analysis.
+    The `fetch` command retrieves Kubernetes RBAC resources for analysis or auditing. You can fetch resources live from a cluster and optionally save them to a JSON file for offline analysis.
 
 ---
 
@@ -64,4 +64,4 @@ rbaclens fetch [flags]
 ---
 
 !!! note
-See the main [README](https://github.com/flushthemoney/RBACLens#readme) for more details on installation and usage.
+    See the main [README](https://github.com/flushthemoney/RBACLens#readme) for more details on installation and usage.
