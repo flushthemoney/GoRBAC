@@ -1,0 +1,8 @@
+# Ignore documentation files to preserve Material MkDocs formatting
+docs/**/*.md
+mkdocs.yml
+
+# Ignore other files that shouldn't be formatted
+*.json
+*.yaml
+*.yml

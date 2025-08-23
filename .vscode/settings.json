@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false,
+    "editor.trimAutoWhitespace": false,
+    "files.trimTrailingWhitespace": false
+  },
+  "files.associations": {
+    "*.md": "markdown"
+  },
+  "prettier.documentSelectors": [],
+  "prettier.ignorePath": ".prettierignore"
+}
