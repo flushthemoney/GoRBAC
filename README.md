@@ -12,7 +12,7 @@ It is also intended to be used by people trying to learn more about RBAC rules o
 - **Audit for risky configurations**: Analyze RBAC resources using built-in rules to detect overly permissive or dangerous settings.
 - **Flexible input**: Audit live from a cluster or from previously saved JSON files.
 
-Comprehensive documentation for each command, including usage, flags, and examples, is available in the [docs/](docs/) directory.
+Comprehensive documentation for each command, including usage, flags, and examples, is available [here](https://flushthemoney.github.io/RBACLens/).
 
 ## Getting Started
 
@@ -99,7 +99,7 @@ After this, you can use the `rbaclens` command as described below.
 
 ## Commands Overview
 
-- **Fetch RBAC Resources**: Use the `fetch` command to collect RBAC resources from your cluster. See [docs/fetch.md](docs/fetch.md) for details.
-- **Audit RBAC Resources**: Use the `ruleaudit` command to analyze RBAC resources for risky configurations. See [docs/ruleaudit.md](docs/ruleaudit.md) for details.
+- **Fetch RBAC Resources**: Use the `fetch` command to collect RBAC resources from your cluster. See the [fetch documentation](https://flushthemoney.github.io/RBACLens/fetch/) for details.
+- **Audit RBAC Resources**: Use the `ruleaudit` command to analyze RBAC resources for risky configurations. See the [ruleaudit documentation](https://flushthemoney.github.io/RBACLens/ruleaudit/) for details.
 
-For more information on all commands and advanced usage, refer to the [docs/](docs/) directory.
+For more information on all commands and advanced usage, refer to the [complete documentation](https://flushthemoney.github.io/RBACLens/).
