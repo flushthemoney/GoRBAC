@@ -84,7 +84,7 @@ The audit categorizes findings into three risk levels:
 
 - :red_circle: **High Risk**: Wildcard permissions (`*`), bindings to unauthenticated users
 - :yellow_circle: **Medium Risk**: Access to secrets, workload creation, privilege escalation verbs
-- :large_blue_circle: **Low Risk**: Broad list/watch permissions, configuration access
+- :blue_circle: **Low Risk**: Broad list/watch permissions, configuration access
 
 ---
 
